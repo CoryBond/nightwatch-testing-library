@@ -1,6 +1,6 @@
 {
   "name": "@testing-library/nightwatch",
-  "version": "1.0.1-semantically-released",
+  "version": "2.0.1",
   "description": "",
   "main": "dist/index.js",
   "typings": "typings",

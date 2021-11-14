@@ -14,9 +14,20 @@ const SIMMERJS = fs.readFileSync(require.resolve('simmerjs/dist/simmer.js')).toS
 
 let _config = null;
 
-function injectNWTL(browser) {
-    browser.execute(DOM_TESTING_LIBRARY_UMD);
+function injectDomLib(library) {
+    // add DOM Testing Library to page as a script tag to support Firefox
+    if (navigator.userAgent.indexOf('Firefox') !== -1) {
+      const script = document.createElement('script')
+      script.innerHTML = library
+      return document.head.append(script)
+    }
 
+    // eval library on other browsers
+    return eval(library)
+}
+
+function injectNWTL(browser) {
+    browser.execute(injectDomLib, [DOM_TESTING_LIBRARY_UMD]);
     browser.execute(SIMMERJS);
 
     if (_config) {
